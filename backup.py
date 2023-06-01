@@ -61,9 +61,9 @@ def main():
         for video in camera.last_n_videos(-1):
             download_and_upload_video(config, camera, video)
     
-    camera_name = camera.name.lower().replace(' ', '_')
-    if os.path.exists(camera_name):
-        shutil.rmtree(camera_name)
+        camera_name = camera.name.lower().replace(' ', '_')
+        if os.path.exists(camera_name):
+            shutil.rmtree(camera_name)
     
 
 if __name__ == '__main__':
