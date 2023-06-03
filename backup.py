@@ -1,8 +1,6 @@
 import os
-import shutil
 import logging
 from google.cloud import storage
-import pyaarlo
 from clients import *
  
 log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s" 

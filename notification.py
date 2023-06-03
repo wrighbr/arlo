@@ -17,7 +17,7 @@ def push_arlo_bat_notification(config, camera):
 def push_arlo_offline_notification(config, camera):
     if camera.is_unavailable:
         push_bullet = pushbullet_client(config)
-        message = "Camera {} (ID: {})"\
+        message = "Camera {} (ID: {}) battery level: {}%"\
             .format(camera.name, camera.device_id, camera.battery_level)
         
         logger.warning("Arlo {} is offline".format(message))
