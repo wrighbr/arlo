@@ -41,30 +41,34 @@ def download_and_upload_video(config, camera, video):
         logger.info(f'Downloading: {video_name}')
         video.download_video(video_name)
         upload_file(config['google']['gcp']['bucket'], video_name, dest_file)
+        os.remove(video_name)
 
 def push_arlo_bat_notification(config, camera):
     push_bullet = pushbullet_client(config)
+    message = "Camera {} (ID: {}) battery level: {}%"\
+        .format(camera.name, camera.device_id, camera.battery_level)
+    logging.info(message)
     if camera.battery_level < config['arlo']['battery_level']:
-        message = "Camera {} (ID: {}) battery level: {}%"\
-            .format(camera.name, camera.device_id, camera.battery_level)
         push_bullet.push_note("Arlo Battery Level", message)
+
+def push_arlo_offline_notification(config, camera):
+    if camera.is_unavailable:
+        push_bullet = pushbullet_client(config)
+        message = "Camera {} (ID: {})"\
+        .format(camera.name, camera.device_id, camera.battery_level)
+        push_bullet.push_note("Arlo Camera offline", message)
 
 def main():
     config = read_config()
     set_gcp_credentials(config)
     arlo = arlo_client(config)
     
-
     for camera in arlo.cameras:
         push_arlo_bat_notification(config, camera)
+        push_arlo_offline_notification(config, camera)
 
         for video in camera.last_n_videos(-1):
             download_and_upload_video(config, camera, video)
-    
-        camera_name = camera.name.lower().replace(' ', '_')
-        if os.path.exists(camera_name):
-            shutil.rmtree(camera_name)
-    
 
 if __name__ == '__main__':
     main()
