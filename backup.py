@@ -4,7 +4,7 @@ from google.cloud import storage
 from clients import *
  
 log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s" 
-logging.basicConfig(format = log_format, level = logging.INFO)
+logging.basicConfig(filename = 'backup.log', format = log_format, level = logging.INFO)
 logger = logging.getLogger()
  
 def set_gcp_credentials(config):

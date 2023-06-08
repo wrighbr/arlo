@@ -2,7 +2,7 @@ import logging
 from clients import *
 
 log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s" 
-logging.basicConfig(format = log_format, level = logging.INFO)
+logging.basicConfig(filename = 'notification.log', format = log_format, level = logging.INFO)
 logger = logging.getLogger()
  
 
