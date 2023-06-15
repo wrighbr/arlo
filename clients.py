@@ -11,6 +11,7 @@ def arlo_client(config):
     client = pyaarlo.PyArlo(
         username=config['arlo']['username'],
         password=config['arlo']['password'],
+        backend='sse',
         mqtt_host='mqtt-cluster-z1.arloxcld.com',
         tfa_host='imap.gmail.com',
         tfa_source='imap',

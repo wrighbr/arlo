@@ -20,8 +20,10 @@ def push_arlo_offline_notification(config, camera):
         message = "Camera {} (ID: {}) battery level: {}%"\
             .format(camera.name, camera.device_id, camera.battery_level)
         
-        logger.warning("Arlo {} is offline".format(message))
+        logger.warning("Arlo camera {} is offline".format(message))
         push_bullet.push_note("Arlo Camera offline", message)
+    else:
+        logger.info("Arlo camera {} is online".format(camera.name))   
 
 
 def main():

@@ -31,6 +31,7 @@ def download_and_upload_video(config, camera, video):
 
     gsc_file = get_gsc_file(config['google']['gcp']['bucket'], dest_file)
 
+    logger.info(f'Checking: {dest_file}')
     if not gsc_file.exists():
         camera_name = camera.name.lower().replace(' ', '_')
         if not os.path.exists(camera_name):
@@ -40,6 +41,8 @@ def download_and_upload_video(config, camera, video):
         video.download_video(video_name)
         upload_file(config['google']['gcp']['bucket'], video_name, dest_file)
         os.remove(video_name)
+    else:
+        logger.info(f'Already exists: {dest_file}')
 
 def main():
     config = read_config()
