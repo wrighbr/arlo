@@ -10,13 +10,15 @@ logger = logging.getLogger()
 def main():
     config = read_config()
     arlo = arlo_client(config)
-    
+    set_gcp_credentials(config)
+
     for camera in arlo.cameras:
         # backing video's
-        logger.info(f'backing up camera {camera.name}')
-        print(camera.last_n_videos(-1))
+        logger.info(f'Backing up camera {camera.name}')
+        for video in camera.last_n_videos(-1):
+            download_and_upload_video(config, camera, video)
 
-        # 
+        # pushing notifications
         push_arlo_bat_notification(config, camera)
         push_arlo_offline_notification(config, camera)
 
