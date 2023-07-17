@@ -13,7 +13,7 @@ def main():
     
     for camera in arlo.cameras:
         # backing video's
-        logger(f'backing up camera {camera.name}')
+        logger.info(f'backing up camera {camera.name}')
         print(camera.last_n_videos(-1))
 
         # 
